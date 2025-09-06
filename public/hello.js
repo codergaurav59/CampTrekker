@@ -1,0 +1,1 @@
+alert("A hello from public directory")

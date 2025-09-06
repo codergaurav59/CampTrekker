@@ -1,0 +1,106 @@
+<% layout('layouts/boilerplate') %>
+
+<link rel="stylesheet" href="/styles/stars.css">
+<link rel="stylesheet" href="/styles/showPage.css">
+
+<script>
+  const mapToken = "<%- process.env.MAPBOX_TOKEN %>";
+  const campground = <%- JSON.stringify(campground) %>;
+</script>
+
+<div class="showPageHeading">
+  <h1>Welcome to <%= campground.title %></h1>
+</div>
+
+<div class="row mb-5">
+  <!-- Campground Details -->
+  <div class="col-md-6 myCard">
+    <div class="card" style="width:30rem;">
+      <!-- Carousel -->
+      <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner" id="myCardSlider">
+          <% for(let i = 0; i < campground.images.length; i++) { %>
+            <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+              <img class="d-block w-100" style="height: 30rem;" src="<%= campground.images[i].url %>" alt="Image <%= i + 1 %>">
+            </div>
+          <% } %>
+        </div>
+        <% if (campground.images.length > 1) { %>
+          <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        <% } %>
+      </div>
+
+      <div class="card-body">
+        <h5 class="card-title"><%= campground.title %></h5>
+        <p class="card-text"><%= campground.description %></p>
+      </div>
+
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><%= campground.location %></li>
+
+        <% if (campground.author) { %>
+          <li class="list-group-item">Submitted By <%= campground.author.username %></li>
+        <% } %>
+
+        <li class="list-group-item">$<%= campground.price %>/night</li>
+      </ul>
+
+      <% if (currentUser && currentUser.equals(campground.author)) { %>
+        <div class="card-body">
+          <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-primary">Edit</a>
+          <form action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST" class="d-inline">
+            <button class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- Reviews & Map -->
+  <div class="review col-md-6 mb-3">
+    <div id="map" class="mb-3" style="width: 500px; height: 300px; margin: 10px;"></div>
+
+    <% if (currentUser) { %>
+      <div class="myReview">
+        <h2 class="reviewHeading">Leave a Review</h2>
+        <form action="/campgrounds/<%= campground._id %>/reviews" method="POST" class="mb-3 validated-form" novalidate>
+          <div class="rating mb-3">
+            <label for="rating">Rating</label>
+            <input type="range" class="form-control" min="1" max="5" name="review[rating]" id="rating">
+          </div>
+          <div class="body mb-3">
+            <label for="body">Review</label>
+            <textarea class="form-control" name="review[body]" id="body" rows="3" cols="10" placeholder="Write a review" required></textarea>
+          </div>
+          <button class="btn btn-success">Add review</button>
+        </form>
+      </div>
+    <% } %>
+
+    <% for (let review of campground.reviews) { %>
+      <div class="card mb-3">
+        <div class="card-body">
+          <p class="starability-result" data-rating="<%= review.rating %>">
+            Rating: <%= review.rating %>
+          </p>
+          <p class="card-text">Review: <%= review.body %></p>
+
+          <% if (currentUser && currentUser.equals(review.author._id)) { %>
+            <form action="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+              <button class="btn btn-sm btn-danger">Delete</button>
+            </form>
+          <% } %>
+        </div>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+<script src="/javascripts/showmap.js"></script>

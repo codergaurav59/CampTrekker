@@ -1,0 +1,75 @@
+<%layout('layouts/boilerplate')%>
+    
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h1>Add a new campground</h1>
+            <form action="/campgrounds" method="post"  noValidate class="validated-form" enctype="multipart/form-data">
+                <div class="form-group">
+
+
+                
+                    <Label for="title">Enter title</Label>
+                    <input type="text" name="campground[title]" id="title" class="form-control mt-3" required>
+                    <div class="valid-feedback">
+                        Looks Good!
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <Label for="location">Enter location</Label>
+                    <input type="text" name="campground[location]" id="location" class="form-control mt-3" required>
+                    <div class="valid-feedback">
+                        Looks Good!
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <Label for="image">Upload Image</Label>
+                    <input type="file" name="image" id="image" multiple>
+                </div>
+                <!-- <div class="form-group">
+                    <Label for="image">Enter image Url</Label>
+                    <input type="text" name="campground[image]" id="image" class="form-control mt-3 " required >
+                    <div class="valid-feedback">
+                        Looks Good!
+                    </div>
+                </div> -->
+
+
+                <div class="col-auto">
+                    <label class="sr-only" for="price">Enter Price</label>
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">$</div>
+                      </div>
+                      <input type="number" class="form-control" id="price" name="campground[price]" placeholder="0.00" required >
+                      <div class="valid-feedback">
+                        Looks Good!
+                    </div>
+                    </div>
+                  </div>
+                <div class="form-group">
+                    <label for="description">Enter Description</label>
+                    <textarea class="form-control" id="description" rows="3" name="campground[description]" required></textarea>
+                    <div class="valid-feedback">
+                        Looks Good!
+                    </div>
+                </div>
+
+                <div class="input-group mb-3">
+
+                   
+                      </div>
+
+
+                
+                <button class="btn btn-success">Add campground</button>
+                </div>
+            </form>
+            <!-- <h2><a href="/campgrounds">All campgrounds</a></h2> -->
+        </div>
+    </div>
+   
+    

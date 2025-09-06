@@ -1,0 +1,31 @@
+#myCardSlider{
+    /* border: 5px solid rgb(28, 31, 234); */
+    height:50;
+    width:500;
+}
+.reviewHeading{
+    text-align: center;
+}
+.myReview{
+    /* border: 2px solid purple; */
+    padding: 10px;
+    margin: 10px;
+}   
+.showPageHeading{
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    margin-top: -5px;
+}
+.myCard{
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+
+}
+.myMap{
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+
+}

@@ -1,0 +1,42 @@
+<% layout('layouts/boilerplate') %>
+
+<!-- Styles -->
+<link rel="stylesheet" href="/styles/index.css">
+
+<!-- Script: Map token and campgrounds data -->
+<script>
+  const mapToken = '<%= process.env.MAPBOX_TOKEN %>';
+  const campgrounds = { features: <%- JSON.stringify(campgrounds) %> };
+</script>
+
+<!-- Heading and Map Container -->
+<h1 class="index-text mb-3">Explore all campgrounds on this interactive map!!</h1>
+<div id="map" class="map-cluster mb-3"></div>
+
+<!-- Campground List -->
+<% if (campgrounds && campgrounds.length > 0) { %>
+  <% for (let camp of campgrounds) { %>
+    <div class="card mb-3">
+      <div class="row camp-box">
+        <div class="col-md-4 img-holder">
+          <% if (camp.images.length > 0) { %>
+            <img crossorigin="anonymous" src="<%= camp.images[0].url %>" alt="" class="img-thumbnail camp-img">
+          <% } %>
+        </div>
+        <div class="col-md-8">
+          <h5 class="card-title mt-3"><strong><%= camp.title %></strong></h5>
+          <p><%= camp.description %></p>
+          <span class="text-muted"><p><%= camp.location %></p></span>
+          <a href="/campgrounds/<%= camp._id %>">
+            <button class="btn btn-primary">View <%= camp.title %></button>
+          </a>
+        </div>
+      </div>
+    </div>
+  <% } %>
+<% } else { %>
+  <p>No campgrounds available at the moment.</p>
+<% } %>
+
+<!-- Script: Cluster map logic -->
+<script src="/javascripts/clusterMap.js"></script>
