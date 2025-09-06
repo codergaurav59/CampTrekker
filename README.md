@@ -83,8 +83,8 @@ CampTrekker/
 
 1. Clone the repo  
    ```bash
-   git clone https://github.com/your-username/campify.git
-   cd campify
+   git clone https://github.com/your-username/CampTrekker.git
+   cd campify-main
    ```
 
 2. Install dependencies  
